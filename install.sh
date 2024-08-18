@@ -24,9 +24,9 @@ REPLACE="
 
 print_modname() {
   ui_print "*******************************"
-  ui_print "*      One UI  6.1 Sounds  *"
+  ui_print "*      One UI  6.1 Sounds     *"
   ui_print "*******************************"
-  ui_print "*     Module by SuperSU   *"
+  ui_print "*   Module by Samuel Kendall  *"
   ui_print "*******************************"
 }
 
