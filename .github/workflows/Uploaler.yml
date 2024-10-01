@@ -22,7 +22,7 @@ jobs:
         sudo apt -y upgrade
         sudo apt -y install tar zip wget
 
-    - name: Clone 
+    - name: Clone and Build
       run: |
         git clone https://github.com/kinguser981/OneUISounds.git
         cd OneUISounds
@@ -30,7 +30,7 @@ jobs:
         zip -r OneUISounds_Magisk *
         echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
-    - name: Set Build Date # Output will be use in Release
+    - name: Set Build Date
       run: |
         echo "BUILD_DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
 
