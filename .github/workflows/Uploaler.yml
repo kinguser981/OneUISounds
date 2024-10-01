@@ -1,0 +1,51 @@
+name: One UI 6.1 Sounds 2024
+
+on:
+  workflow_dispatch:
+   
+jobs:
+  build:
+    name: make zip and release ${{ github.actor }}
+    runs-on: ubuntu-20.04
+    if: github.event.repository.owner.id == github.event.sender.id
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+    steps:
+    - name: Check Out
+      uses: actions/checkout@v3
+
+    - name: Prepare the environment
+      run: |
+        sudo apt update
+        sudo apt -y upgrade
+        sudo apt -y install tar zip wget
+
+    - name: Clone 
+      run: |
+        git clone https://github.com/kinguser981/OneUISounds.git
+        cd OneUISounds
+        rm README.md
+        zip -r OneUISounds_Magisk *
+        echo "COMMIT_ID=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
+    - name: Set Build Date # Output will be use in Release
+      run: |
+        echo "BUILD_DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
+
+    - name: Release files
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          OneUISounds/OneUISounds_Magisk.zip
+        name: One UI 6.1 Sounds ${{ env.BUILD_DATE }}
+        tag_name: ${{ github.run_id }}
+        body: |
+          Changelog:
+                    v6.1
+                    Added new One UI Sounds
+                    Added old One UI Sounds
+                    Added Spen UI sound
+                    Added SoundTheme
+        continue-on-error: true
